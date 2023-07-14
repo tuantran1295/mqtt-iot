@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start-publisher": "nodemon publisher.js"
   },
   "author": "TranQuocTuan",
   "license": "ISC",
   "dependencies": {
-    "mqtt": "^4.3.7"
+    "mqtt": "^4.3.7",
+    "nodemon": "^3.0.1"
   }
 }
