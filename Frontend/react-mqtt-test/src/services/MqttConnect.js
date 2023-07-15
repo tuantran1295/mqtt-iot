@@ -29,15 +29,18 @@ function MqttConnect() {
                 client.subscribe(TANK_TOPIC);
                 client.subscribe(TEMP_TOPIC);
                 console.log("Client subscribed ");
+                setConnectStatus(CONNECT_STATUS.CONNECT);
             });
 
             client.on("error", (err) => {
                 console.error("Connection error: ", err);
                 client.end();
+                setConnectStatus(CONNECT_STATUS.ERROR)
             });
 
             client.on("reconnect", () => {
                 console.log("Reconnecting...");
+                setConnectStatus(CONNECT_STATUS.RECONNECT)
             });
 
             client.on("message", (topic, message) => {
