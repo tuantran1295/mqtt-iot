@@ -22,7 +22,7 @@ const Dashboard = () => {
         <h1>DASHBOARD</h1>
         <div>
             <ul className="messageList">
-                {dashboardMessages.map((message) => <li>{JSON.stringify(message)}</li>)}
+                {dashboardMessages.map((message, index) => <li key={index}>{JSON.stringify(message)}</li>)}
             </ul>
         </div>
         <button onClick={() => navigate("/device")}>

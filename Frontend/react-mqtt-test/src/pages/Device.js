@@ -21,7 +21,7 @@ const Device = () => {
         <MqttConnect/>
         <h1>Device</h1>
         <ul className="messageList">
-            {deviceMessages.map((message) => <li>{JSON.stringify(message)}</li>)}
+            {deviceMessages.map((message, index) => <li key={index}>{JSON.stringify(message)}</li>)}
         </ul>
         <button onClick={() => navigate("/")}>
             Go to Dashboard Page
