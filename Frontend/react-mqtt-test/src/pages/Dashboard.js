@@ -3,6 +3,7 @@ import { DataContext } from '../context/DataProvider';
 import MqttConnect from "../services/MqttConnect";
 import { useNavigate } from "react-router";
 import {TANK_TOPIC} from "../constant";
+import Navbar from "../component/Navbar";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -12,22 +13,63 @@ const Dashboard = () => {
     useEffect(() => {
         console.log(payload);
         if (payload.topic === TANK_TOPIC) {
-            const newMessages = [...dashboardMessages, payload.message];
+            const parsedMessage = JSON.parse(payload.message)
+            const newMessages = [...dashboardMessages, parsedMessage];
             setMessages(newMessages);
         }
+        // console.log(dashboardMessages);
     },[payload]);
 
     return <div>
         <MqttConnect/>
-        <h1>DASHBOARD</h1>
-        <div>
-            <ul className="messageList">
-                {dashboardMessages.map((message, index) => <li key={index}>{JSON.stringify(message)}</li>)}
-            </ul>
+        <Navbar/>
+
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="max-h-screen w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" className="px-6 py-3">
+                        Device ID
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        Device Name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        Status
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {dashboardMessages.map((message, index) =>
+                    <tr className="bg-white dark:bg-gray-800">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {message.device_id}
+                        </th>
+                        <td className="px-6 py-4">
+                            {message.device_name}
+                        </td>
+                        <td className="px-6 py-4">
+                            <div className="flex items-center">
+                                <div className={`h-2.5 w-2.5 rounded-full mr-2 ${message.status === 1 ? "bg-green-500" : "bg-red-500" } ` }></div>
+                                {message.status === 1 ? "True" : "False"}
+                            </div>
+                        </td>
+                    </tr>)
+                }
+                </tbody>
+            </table>
         </div>
-        <button onClick={() => navigate("/device")}>
-            Go to Device Page
-        </button>
+
+
+        {/*<h1>DASHBOARD</h1>*/}
+        {/*<div>*/}
+        {/*    <ul className="messageList">*/}
+        {/*        {dashboardMessages.map((message, index) => <li key={index}>{JSON.stringify(message)}</li>)}*/}
+        {/*    </ul>*/}
+        {/*</div>*/}
+        {/*<button onClick={() => navigate("/device")}>*/}
+        {/*    Go to Device Page*/}
+        {/*</button>*/}
     </div>
 }
 
