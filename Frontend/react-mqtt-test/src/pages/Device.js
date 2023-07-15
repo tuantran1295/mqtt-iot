@@ -20,10 +20,10 @@ const Device = () => {
     return <div>
         <MqttConnect/>
         <h1>Device</h1>
-        <ul>
+        <ul className="messageList">
             {deviceMessages.map((message) => <li>{JSON.stringify(message)}</li>)}
         </ul>
-        <button onClick={() => navigate("/dashboard")}>
+        <button onClick={() => navigate("/")}>
             Go to Dashboard Page
         </button>
     </div>

@@ -21,7 +21,7 @@ const Dashboard = () => {
         <MqttConnect/>
         <h1>DASHBOARD</h1>
         <div>
-            <ul>
+            <ul className="messageList">
                 {dashboardMessages.map((message) => <li>{JSON.stringify(message)}</li>)}
             </ul>
         </div>
